@@ -22,22 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Suche...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
 
-  <meta name="description" content="@Controller：告诉Spring当前类为处理器类，需在SpringMVC配置文件 **dispatcherServlet.xml **中声明组件扫描器 1&lt;context:component-scan base-package&#x3D;&quot;com.jjx.controller&quot; &#x2F;&gt;  @RequestMapping：将浏览器发送的请求与控制器中的处理方法对应起来.">
+  <meta name="description" content="一个简单的SSM项目，学生信息管理系统。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Metoera’s blogs">
-<meta property="og:url" content="http://example.com/2020/10/10/Spring%20MVC%E5%AD%A6%E4%B9%A0/@Controller%E5%92%8C@RequestMapping%E6%B3%A8%E8%A7%A3/index.html">
+<meta property="og:title" content="SSM整合项目">
+<meta property="og:url" content="http://example.com/2020/10/11/Spring%E5%AD%A6%E4%B9%A0/SSM%E6%95%B4%E5%90%88%E9%A1%B9%E7%9B%AE/index.html">
 <meta property="og:site_name" content="Metoera’s blogs">
-<meta property="og:description" content="@Controller：告诉Spring当前类为处理器类，需在SpringMVC配置文件 **dispatcherServlet.xml **中声明组件扫描器 1&lt;context:component-scan base-package&#x3D;&quot;com.jjx.controller&quot; &#x2F;&gt;  @RequestMapping：将浏览器发送的请求与控制器中的处理方法对应起来.">
+<meta property="og:description" content="一个简单的SSM项目，学生信息管理系统。">
 <meta property="og:locale">
-<meta property="og:image" content="c:/Users/j/AppData/Roaming/Typora/typora-user-images/image-20201009204653076.png">
-<meta property="article:published_time" content="2020-10-10T01:29:35.767Z">
-<meta property="article:modified_time" content="2020-10-09T12:47:28.806Z">
+<meta property="article:published_time" content="2020-10-11T08:31:22.243Z">
+<meta property="article:modified_time" content="2020-10-11T08:31:11.532Z">
 <meta property="article:author" content="Metoera">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/j/AppData/Roaming/Typora/typora-user-images/image-20201009204653076.png">
 
 
-<link rel="canonical" href="http://example.com/2020/10/10/Spring%20MVC%E5%AD%A6%E4%B9%A0/@Controller%E5%92%8C@RequestMapping%E6%B3%A8%E8%A7%A3/">
+<link rel="canonical" href="http://example.com/2020/10/11/Spring%E5%AD%A6%E4%B9%A0/SSM%E6%95%B4%E5%90%88%E9%A1%B9%E7%9B%AE/">
 
 
 <script class="page-configurations">
@@ -50,7 +48,7 @@
   };
 </script>
 
-  <title> | Metoera’s blogs</title>
+  <title>SSM整合项目 | Metoera’s blogs</title>
   
 
 
@@ -138,7 +136,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Inhaltsverzeichnis
@@ -150,7 +148,6 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">@Controller：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RequestMapping%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">@RequestMapping：</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -200,7 +197,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/10/Spring%20MVC%E5%AD%A6%E4%B9%A0/@Controller%E5%92%8C@RequestMapping%E6%B3%A8%E8%A7%A3/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/11/Spring%E5%AD%A6%E4%B9%A0/SSM%E6%95%B4%E5%90%88%E9%A1%B9%E7%9B%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -216,7 +213,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          SSM整合项目
         </h1>
 
         <div class="post-meta-container">
@@ -226,16 +223,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Veröffentlicht am</span>
+      
 
-      <time title="Erstellt: 2020-10-10 09:29:35" itemprop="dateCreated datePublished" datetime="2020-10-10T09:29:35+08:00">2020-10-10</time>
+      <time title="Erstellt: 2020-10-11 16:31:22 / Geändert am: 16:31:11" itemprop="dateCreated datePublished" datetime="2020-10-11T16:31:22+08:00">2020-10-11</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Bearbeitet am</span>
-        <time title="Geändert am: 2020-10-09 20:47:28" itemprop="dateModified" datetime="2020-10-09T20:47:28+08:00">2020-10-09</time>
-      </span>
 
   
 </div>
@@ -247,15 +238,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="Controller："><a href="#Controller：" class="headerlink" title="@Controller："></a><strong>@Controller：</strong></h3><p>告诉Spring当前类为处理器类，需在SpringMVC配置文件 **dispatcherServlet.xml **中声明组件扫描器</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.jjx.controller&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="RequestMapping："><a href="#RequestMapping：" class="headerlink" title="@RequestMapping："></a><strong>@RequestMapping：</strong></h3><p>将浏览器发送的请求与控制器中的处理方法对应起来.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/index/login&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">doLogin</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;/WEB-INF/index/login.jsp&quot;</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=&quot;$&#123;pageContext.request.contextPath&#125; /index/login&quot;&gt;login&lt;/a&gt;</span><br><span class="line"><span class="comment">//$&#123;pageContext.request.contextPath &#125;表示当前tomcat部署的路径</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="C:\Users\j\AppData\Roaming\Typora\typora-user-images\image-20201009204653076.png" alt="image-20201009204653076"></p>
+        <p>一个简单的SSM项目，学生信息管理系统。</p>
 
     </div>
 
@@ -269,14 +252,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/10/10/MyBatis%E5%AD%A6%E4%B9%A0/%E5%88%AB%E5%90%8DtypeAliases/" rel="prev" title="">
+                <a href="/2020/10/11/Spring%20MVC%E5%AD%A6%E4%B9%A0/%E5%A4%84%E7%90%86%E5%99%A8%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0/" rel="prev" title="">
                   <i class="fa fa-chevron-left"></i> 
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/10/10/Spring%E5%AD%A6%E4%B9%A0/Spring%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%B3%A8%E5%85%A5/" rel="next" title="">
-                   <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
