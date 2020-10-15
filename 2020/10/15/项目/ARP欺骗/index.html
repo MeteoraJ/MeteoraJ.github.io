@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"8.0.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="模拟测试环境如下:  拓扑图【实验使用两台电脑作为实验对象，连接同一个网关，一台作为攻击者，一台作为被攻击者。 程序结构如下:            GUI:图形化界面. InitDevice:将每个类中与网卡交互部分的重复代码，提取为一个工具类,实现对网络的控制。 InterceptPacket:通过修改以太网包的头部源或目的MAC地址改变包的传送目标 MITM:中介，调用两种攻击方式，实现中间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARP欺骗工具">
+<meta property="og:url" content="http://example.com/2020/10/15/%E9%A1%B9%E7%9B%AE/ARP%E6%AC%BA%E9%AA%97/index.html">
+<meta property="og:site_name" content="Metoera’s blogs">
+<meta property="og:description" content="模拟测试环境如下:  拓扑图【实验使用两台电脑作为实验对象，连接同一个网关，一台作为攻击者，一台作为被攻击者。 程序结构如下:            GUI:图形化界面. InitDevice:将每个类中与网卡交互部分的重复代码，提取为一个工具类,实现对网络的控制。 InterceptPacket:通过修改以太网包的头部源或目的MAC地址改变包的传送目标 MITM:中介，调用两种攻击方式，实现中间">
+<meta property="og:locale">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps1.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps2.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps3.jpg?lastModify=1602724216">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps4.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps5.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps6.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps7.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps8.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps9.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps10.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps11.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps12.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps13.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps14.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps15.jpg">
+<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps16.jpg">
+<meta property="article:published_time" content="2020-10-15T01:23:39.913Z">
+<meta property="article:modified_time" content="2020-10-15T01:15:57.894Z">
+<meta property="article:author" content="Metoera">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps1.jpg">
+
+
+<link rel="canonical" href="http://example.com/2020/10/15/%E9%A1%B9%E7%9B%AE/ARP%E6%AC%BA%E9%AA%97/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>ARP欺骗工具 | Metoera’s blogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Metoera’s blogs</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84%E5%A6%82%E4%B8%8B"><span class="nav-number">1.0.0.0.1.</span> <span class="nav-text">程序结构如下:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-number">1.0.1.</span> <span class="nav-text">原理分析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E6%95%88%E6%9E%9C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">工具效果测试</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Wireshark%E6%8A%93%E5%8C%85%E9%AA%8C%E8%AF%81"><span class="nav-number">1.0.2.</span> <span class="nav-text">Wireshark抓包验证</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Metoera</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/15/%E9%A1%B9%E7%9B%AE/ARP%E6%AC%BA%E9%AA%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Metoera">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Metoera’s blogs">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ARP欺骗工具
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-10-15 09:23:39 / 修改时间：09:15:57" itemprop="dateCreated datePublished" datetime="2020-10-15T09:23:39+08:00">2020-10-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>模拟测试环境如下:</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps1.jpg" alt="img"></h2><p> 拓扑图【实验使用两台电脑作为实验对象，连接同一个网关，一台作为攻击者，一台作为被攻击者。</p>
+<h6 id="程序结构如下"><a href="#程序结构如下" class="headerlink" title="程序结构如下:"></a>程序结构如下:</h6><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps2.jpg" alt="img"></td>
+</tr>
+</tbody></table>
+<p>GUI:图形化界面.</p>
+<p>InitDevice:将每个类中与网卡交互部分的重复代码，提取为一个工具类,实现对网络的控制。</p>
+<p>InterceptPacket:通过修改以太网包的头部源或目的MAC地址改变包的传送目标</p>
+<p>MITM:中介，调用两种攻击方式，实现中间人攻击</p>
+<p>SendFakeArp：向网关和被攻击者发送伪造的ARP包</p>
+<h4 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h4><p>中间人攻击（MITM），MITM作为主类(main class)和两种攻击类的中介(InterCeptPacket类，SendFakeArp)InterCeptPacket类：(截获数据包并修改后转发) SendFakeArp类：(发送伪造的ARP)调用SendFakeArp,让攻击主机向被攻击者发送ARP Replay包，此包的源IP地址为网关IP，目的IP为被攻击者的IP，原MAC地址为攻击者的MAC地址,目的MAC为被攻击者的MAC地址（发送此包的作用是让被攻击者的ARP表更新，将网关的IP与攻击者的MAC地址对应起来，从而伪造成网关）再让攻击者向网关发送ARP Replay包,此包的源IP地址为被攻击者的IP地址，目的IP地址为网关IP地址，源MAC地址为攻击者的MAC，目的MAC为网关的MAC地址（发送此包的作用是让网关的ARP表更新，将被攻击者的IP地址与攻击者的MAC地址对应起来），接着调用InterceptPacket中的方法，通过修改以太网包的头部源或目的MAC地址改变包的传送目标。</p>
+<p>使用SendFakeArp类中方法仅能够将目标机断网，易被察觉，为了实现双向监听，在接收到被攻击者发向网关的数据包时，要将它转发给网关。<br>同理网关回复给目标机的数据包也要将其转发给目标机。这样被攻击者的网络才能够连通。方法：在截获到被攻击者与网关间的数据包后，更改其MAC地址，起到中间人的作用</p>
+<p>图形化界面设计</p>
+<p><img src="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps3.jpg?lastModify=1602724216" alt="img"></p>
+<p>界面由两个文本输入框(TextField)，一个文本域(TextArea)，两个按钮(Button)，两个标签(Label)组成。</p>
+<p>通过按钮来执行相应的操作，操作结果会在下方的文本域中显示。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps4.jpg" alt="img"></td>
+</tr>
+</tbody></table>
+<p>该方法需要两个参数，一个为数据包对象，一个为要更改为的MAC地址，方法的功能为，将传入的数据包头部的MAC地址，更改为所需要的MAC地址，然后再转发出去。</p>
+<p> <img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps5.jpg" alt="img"></p>
+<p>这些代码将截获到的数据包根据相应的目的IP地址转发出去</p>
+<p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps6.jpg" alt="img">  </p>
+<p>这些属性是为将数据包设置为ARP数据包，从而构造假的ARP包。</p>
+<p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps7.jpg" alt="img"> </p>
+<p>这个方法是为了通过JPcap实现java对网卡的控制，建立与网卡的连接，由于这些代码在每个类中都会出现，所以将这些重复代码提取为了工具类InitDevice。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps8.jpg" alt="img"></td>
+</tr>
+</tbody></table>
+<p>​    </p>
+<p>这个线程的功能为向网关和被攻击者发送伪造的ARP包。</p>
+<h5 id="工具效果测试"><a href="#工具效果测试" class="headerlink" title="工具效果测试"></a>工具效果测试</h5><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps9.jpg" alt="img"></td>
+</tr>
+</tbody></table>
+<p>点击”断网”后，目标机访问网站</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps10.jpg" alt="img"></td>
+</tr>
+</tbody></table>
+<p>ARP攻击后目标将无法上网。</p>
+<p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps11.jpg" alt="img"> </p>
+<p>点击“数据监听”后</p>
+<p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps12.jpg" alt="img"> </p>
+<p>部分监听到的数据包</p>
+<p>控制台上打印出了大量的数据包，目标机可以上网。</p>
+<p><strong><em>\</em>4.2 ARP列表测试**</strong></p>
+<p><strong><em>\</em>4.2.1正常的ARP缓存表**</strong></p>
+<p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps13.jpg" alt="img"> </p>
+<p>图4.2.1 正常的网关MAC地址</p>
+<p>可以看到，被攻击者没有被攻击时，ARP缓存表中的网关MAC地址为正常的。</p>
+<p><strong><em>\</em>4.2.2被攻击后的ARP缓存表**</strong></p>
+<p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps14.jpg" alt="img"> </p>
+<p>图4.2.2受到攻击</p>
+<p>此时，目标机中ARP缓存表中，网关的MAC地址已经变为了攻击者的MAC地址。</p>
+<h4 id="Wireshark抓包验证"><a href="#Wireshark抓包验证" class="headerlink" title="Wireshark抓包验证"></a>Wireshark抓包验证</h4><p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps15.jpg" alt="img"> </p>
+<p>点击了”断网”按钮之后，在Wireshark中抓到的ARP数据包，由攻击者发出，目的MAC为被攻击者。</p>
+<p><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps16.jpg" alt="img"> </p>
+<p>可以看到，从wireshark抓到的数据包中，可以分析出，目标访问了百度知道这个网站。</p>
+<p>在攻击机中，可以同时抓取到被攻击者发向网关的数据包，以及网关发向攻击者的数据包。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/11/Spring%E5%AD%A6%E4%B9%A0/SSM%E6%95%B4%E5%90%88%E9%A1%B9%E7%9B%AE/" rel="prev" title="SSM整合项目">
+                  <i class="fa fa-chevron-left"></i> SSM整合项目
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Metoera</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
