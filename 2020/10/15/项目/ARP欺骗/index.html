@@ -29,9 +29,9 @@
 <meta property="og:site_name" content="Metoera’s blogs">
 <meta property="og:description" content="模拟测试环境如下:  拓扑图【实验使用两台电脑作为实验对象，连接同一个网关，一台作为攻击者，一台作为被攻击者。 程序结构如下:            GUI:图形化界面. InitDevice:将每个类中与网卡交互部分的重复代码，提取为一个工具类,实现对网络的控制。 InterceptPacket:通过修改以太网包的头部源或目的MAC地址改变包的传送目标 MITM:中介，调用两种攻击方式，实现中间">
 <meta property="og:locale">
-<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps1.jpg">
-<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps2.jpg">
-<meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps3.jpg?lastModify=1602724216">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/MeteoraJ/PicGo_picture/wps1.jpg">
+<meta property="og:image" content="c:/Users/j/AppData/Local/Temp/ksohtml6812/wps2.jpg">
+<meta property="og:image" content="c:/Users/j/AppData/Local/Temp/ksohtml6812/wps3.jpg?lastModify=1602724216">
 <meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps4.jpg">
 <meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps5.jpg">
 <meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps6.jpg">
@@ -46,10 +46,10 @@
 <meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps15.jpg">
 <meta property="og:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps16.jpg">
 <meta property="article:published_time" content="2020-10-15T01:23:39.913Z">
-<meta property="article:modified_time" content="2020-10-15T01:15:57.894Z">
+<meta property="article:modified_time" content="2020-10-18T10:38:11.342Z">
 <meta property="article:author" content="Metoera">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps1.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/MeteoraJ/PicGo_picture/wps1.jpg">
 
 
 <link rel="canonical" href="http://example.com/2020/10/15/%E9%A1%B9%E7%9B%AE/ARP%E6%AC%BA%E9%AA%97/">
@@ -178,7 +178,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -241,10 +241,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-10-15 09:23:39 / 修改时间：09:15:57" itemprop="dateCreated datePublished" datetime="2020-10-15T09:23:39+08:00">2020-10-15</time>
+      <time title="创建时间：2020-10-15 09:23:39" itemprop="dateCreated datePublished" datetime="2020-10-15T09:23:39+08:00">2020-10-15</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-18 18:38:11" itemprop="dateModified" datetime="2020-10-18T18:38:11+08:00">2020-10-18</time>
+      </span>
 
   
 </div>
@@ -257,7 +263,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>模拟测试环境如下:</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps1.jpg" alt="img"></h2><p> 拓扑图【实验使用两台电脑作为实验对象，连接同一个网关，一台作为攻击者，一台作为被攻击者。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.jsdelivr.net/gh/MeteoraJ/PicGo_picture/wps1.jpg" alt="img"></h2><p> 拓扑图【实验使用两台电脑作为实验对象，连接同一个网关，一台作为攻击者，一台作为被攻击者。</p>
 <h6 id="程序结构如下"><a href="#程序结构如下" class="headerlink" title="程序结构如下:"></a>程序结构如下:</h6><table>
 <thead>
 <tr>
@@ -267,7 +273,7 @@
 </thead>
 <tbody><tr>
 <td></td>
-<td><img src="file:///C:\Users\j\AppData\Local\Temp\ksohtml6812\wps2.jpg" alt="img"></td>
+<td><img src="C:\Users\j\AppData\Local\Temp\ksohtml6812\wps2.jpg" alt="img"></td>
 </tr>
 </tbody></table>
 <p>GUI:图形化界面.</p>
@@ -278,7 +284,7 @@
 <h4 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h4><p>中间人攻击（MITM），MITM作为主类(main class)和两种攻击类的中介(InterCeptPacket类，SendFakeArp)InterCeptPacket类：(截获数据包并修改后转发) SendFakeArp类：(发送伪造的ARP)调用SendFakeArp,让攻击主机向被攻击者发送ARP Replay包，此包的源IP地址为网关IP，目的IP为被攻击者的IP，原MAC地址为攻击者的MAC地址,目的MAC为被攻击者的MAC地址（发送此包的作用是让被攻击者的ARP表更新，将网关的IP与攻击者的MAC地址对应起来，从而伪造成网关）再让攻击者向网关发送ARP Replay包,此包的源IP地址为被攻击者的IP地址，目的IP地址为网关IP地址，源MAC地址为攻击者的MAC，目的MAC为网关的MAC地址（发送此包的作用是让网关的ARP表更新，将被攻击者的IP地址与攻击者的MAC地址对应起来），接着调用InterceptPacket中的方法，通过修改以太网包的头部源或目的MAC地址改变包的传送目标。</p>
 <p>使用SendFakeArp类中方法仅能够将目标机断网，易被察觉，为了实现双向监听，在接收到被攻击者发向网关的数据包时，要将它转发给网关。<br>同理网关回复给目标机的数据包也要将其转发给目标机。这样被攻击者的网络才能够连通。方法：在截获到被攻击者与网关间的数据包后，更改其MAC地址，起到中间人的作用</p>
 <p>图形化界面设计</p>
-<p><img src="file:///C:/Users/j/AppData/Local/Temp/ksohtml6812/wps3.jpg?lastModify=1602724216" alt="img"></p>
+<p><img src="C:\Users\j\AppData\Local\Temp\ksohtml6812\wps3.jpg?lastModify=1602724216" alt="img"></p>
 <p>界面由两个文本输入框(TextField)，一个文本域(TextArea)，两个按钮(Button)，两个标签(Label)组成。</p>
 <p>通过按钮来执行相应的操作，操作结果会在下方的文本域中显示。</p>
 <table>
@@ -377,6 +383,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2020/10/18/MyBatis%E5%AD%A6%E4%B9%A0/Mybatis%E4%BA%8B%E5%8A%A1/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
